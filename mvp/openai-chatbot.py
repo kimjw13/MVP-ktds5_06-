@@ -1,5 +1,5 @@
 import openai
-# from dotenv import load_dotenv  # Azure App Service에서는 필요 없으므로 주석 처리
+from dotenv import load_dotenv  # Azure App Service에서는 필요 없으므로 주석 처리
 import os
 import streamlit as st
 from openai import AzureOpenAI, RateLimitError
@@ -23,7 +23,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # 환경 변수 로드 (Azure App Service는 OS 환경 변수를 직접 읽음)
-# load_dotenv()
+load_dotenv()
 
 # 데이터베이스 연결 풀 생성 (전역 변수로 관리)
 @st.cache_resource
@@ -161,7 +161,6 @@ def search_invest_excel(search_params: Dict[str, Any]) -> str:
                     else:
                         continue
                     
-                    # 해당 연도의 시작일과 다음 연도의 시작일 미만으로 범위 검색
                     start_date = f"{year}-01-01"
                     end_date = f"{year + 1}-01-01"
                     where_clauses.append(f'"{column}" >= :{param_key}_start AND "{column}" < :{param_key}_end')
@@ -190,7 +189,6 @@ def search_invest_excel(search_params: Dict[str, Any]) -> str:
         if df.empty:
             return "해당 조건에 맞는 데이터가 없습니다."
 
-        # 변경: 검색 결과 요약 부분을 제거하고, 전체 데이터를 반환하도록 수정
         return df.to_string(index=False)
         
     except Exception as e:
@@ -199,14 +197,12 @@ def search_invest_excel(search_params: Dict[str, Any]) -> str:
 
 # ----------------- UI 및 기능 추가 -----------------
 
-# Streamlit 페이지 설정
 st.set_page_config(
     page_title="IT투자심의 AI Agent",
     page_icon="🏢",
     layout="centered"
 )
 
-# 사이드바
 with st.sidebar:
     st.header("IT투자심의 AI Agent")
     st.info("이 챗봇은 데이터베이스를 활용하여 답변합니다.")
@@ -216,7 +212,6 @@ with st.sidebar:
         logger.info("대화가 초기화되었습니다.")
         st.rerun()
 
-    # '검색 가능한 키워드' 버튼 추가
     with st.expander("검색 가능한 키워드"):
         schema = get_table_schema()
         if schema:
@@ -227,29 +222,30 @@ with st.sidebar:
         else:
             st.warning("데이터베이스 스키마를 불러올 수 없습니다.")
 
-
-# 에이전트 프롬프트 설정 (변경: 검색 결과 요약 금지 지시 추가)
+# 에이전트 프롬프트 설정 (강력한 지시 추가)
 agent_prompts = {
-    "사업조회": """당신은 IT투자심의 사업 데이터를 전문적으로 조회하는 챗봇입니다.
-    사용자의 질문에서 핵심 키워드와 값을 추출하여 데이터베이스를 검색하세요.
-    데이터베이스 검색 결과는 요약하지 말고, 전체 내용을 그대로 사용자에게 제공하세요.
-    만약 데이터가 없으면 '데이터에 없습니다'라고 답변하세요.""",
+    "사업조회": """
+당신은 IT투자심의 사업 데이터를 전문적으로 조회하는 챗봇입니다.
+사용자의 질문에서 핵심 키워드와 값을 추출하여 데이터베이스를 검색하세요.
+
+데이터베이스 검색 결과는 **절대로** 요약하거나 변경하지 말고, 전체 내용을 **원본 그대로** 사용자에게 제공해야 합니다.
+특히, '투자심의의견'과 같은 텍스트 필드의 내용은 모든 내용을 빠짐없이 온전하게 보여줘야 합니다.
+
+만약 데이터가 없으면 '데이터에 없습니다'라고 답변하세요.
+""",
 }
 
 st.title("IT투자심의 AI Agent")
 st.divider()
 
-# 세션 상태 초기화
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 
-# 대화 기록 표시
 for message in st.session_state.messages:
     if message['role'] != 'system':
         with st.chat_message(message['role']):
             st.write(message['content'])
 
-# 사용자 입력 처리
 if user_input := st.chat_input("메시지를 입력하세요"):
     logger.info(f"사용자 입력: {user_input}")
     
