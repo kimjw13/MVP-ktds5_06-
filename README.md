@@ -18,12 +18,17 @@ IT투자심의 AI Agent는 데이터베이스에 연결된 IT투자심의 데이
 🖥️ 기술 스택
 
 언어: Python
+
 프레임워크: Streamlit (AI Agent UI)
+
 AI 모델: OpenAI gpt-4.1-mini (Azure OpenAI Service)
+
 데이터베이스: Azure Database for PostgreSQL (SQLAlchemy를 사용하여 연동)
 
 🎤 시연 예시 질문
 
  사업유형이 신규이며 24년 이후 등록된 사업의 예산 요청금액 5년치 내역과 총 합계 금액에 대해 알려줘
+ 
  단위서비스가 AG012101로 시작하는 사업의 상세정보에 대해 알려줘
+ 
  AG0092로 시작하는 서비스에 대해 새로운 IT사업을 생성하려고 하는데, 기존 사업들과 비교해서 투자심의 초안을 하나 만들어줘
