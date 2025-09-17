@@ -35,7 +35,7 @@ graph TD
     B -->|데이터| C(Azure Database for PostgreSQL);
     B -->|검색 요청| D(Azure AI Search);
     B -->|AI 요청| E(Azure OpenAI);
-
+    
 ## 🎤 시연 예시 질문
 
 - 사업유형이 신규이며 24년 이후 등록된 사업의 예산 요청금액 5년치 내역과 총 합계 금액에 대해 알려줘
