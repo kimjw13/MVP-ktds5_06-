@@ -30,11 +30,6 @@ IT투자심의 AI Agent는 연결된 데이터베이스에 저장된 IT투자심
 
 - 데이터베이스: Azure Database for PostgreSQL (SQLAlchemy를 사용하여 연동)
 
-graph TD
-    A[사용자] -->|요청| B(Azure 웹앱);
-    B -->|데이터| C(Azure Database for PostgreSQL);
-    B -->|검색 요청| D(Azure AI Search);
-    B -->|AI 요청| E(Azure OpenAI);
     
 ## 🎤 시연 예시 질문
 
