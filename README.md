@@ -37,7 +37,9 @@ IT투자심의 AI Agent는 연결된 데이터베이스에 저장된 IT투자심
 - 데이터베이스: Azure Database for PostgreSQL (SQLAlchemy를 사용하여 연동)
 
     
-## 🎤 시연 예시 질문
+## 🎤 시연
+
+<img width="1914" height="900" alt="image" src="https://github.com/user-attachments/assets/c9005873-053e-410d-9303-3bbaa2d185ee" />
 
 - 사업유형이 신규이며 24년 이후 등록된 사업의 예산 요청금액 5년치 내역과 총 합계 금액에 대해 알려줘
 
