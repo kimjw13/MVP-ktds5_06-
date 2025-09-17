@@ -28,8 +28,6 @@ IT투자심의 AI Agent는 연결된 데이터베이스에 저장된 IT투자심
 
 ## 🖥️ 기술 스택
 
-- 언어: Python
-
 - 프레임워크: Streamlit (AI Agent UI)
 
 - AI 모델: OpenAI gpt-4.1-mini (Azure OpenAI Service)
